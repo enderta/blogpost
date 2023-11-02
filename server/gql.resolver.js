@@ -4,6 +4,8 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
+const SECRET = process.env.SECRET;
+
 const { BlogPost, Comment, User } = require("../MonogoDB/schema");
 
 const saltRounds = 10;
@@ -59,23 +61,20 @@ const resolvers = {
       return comment;
     },
     //login user
-    loginUser: async (parent, args) => {
-      const user = await User.findOne({ username: args.username });
-      if (!user) {
-        throw new Error("User not found");
-      }
-      const valid = await bcrypt.compare(args.password, user.password);
-      if (!valid) {
-        throw new Error("Invalid password");
-      }
-      const token = jwt.sign(
-        { id: user.id, username: user.username },
-        process.env.SECRET,
-        {
-          expiresIn: "1d",
+    loginUser: async (_, { username, password }) => {
+        const user = await User.findOne({ username });
+        if (!user) {
+            throw new Error('No such user found');
         }
-      );
-      return { token };
+        const valid = await bcrypt.compare(password, user.password);
+        if (!valid) {
+            throw new Error('Invalid password');
+        }
+        const token = jwt.sign({ id: user._id }, SECRET, { expiresIn: '1h' });
+        return {
+            token,
+            user,
+        };
     },
     //update blogpost
     updateBlogPost: async (parent, args) => {
