@@ -7,6 +7,8 @@ type BlogPost {
     content: String!
     author: String!
     image_url: String!
+    created_at: String!
+    updated_at: String!
 }
 
 type Comment {
