@@ -9,6 +9,7 @@ const blogPostSchema = new mongoose.Schema({
   title: String,
   content: String,
   author: String,
+  image_url: String,
   created_at: { type: Date, default: Date.now }
 });
 
@@ -16,6 +17,7 @@ const commentSchema = new mongoose.Schema({
   post_id: { type: mongoose.Schema.Types.ObjectId, ref: 'BlogPost' },
   author: String,
   content: String,
+  title: String,
   created_at: { type: Date, default: Date.now }
 });
 

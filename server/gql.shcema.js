@@ -13,6 +13,7 @@ type BlogPost {
     title: String!,
   content: String!,
   author: String!,
+  image_url: String!,
   created_at: String!
 }
 """  post_id: { type: mongoose.Schema.Types.ObjectId, ref: 'BlogPost' },
@@ -30,13 +31,14 @@ type Comment {
 type Query {
     getBlogPosts: [BlogPost]
     getBlogPostsByAuthor(author: String!): [BlogPost]
+    getBlogPost(id: ID!): BlogPost
     getComments: [Comment]
     getCommentsByAuthor(author: String!): [Comment]
     getUsers: [User]
     getUser(username: String!): User
 }
 type Mutation {
-createBlogPost(title: String!, content: String!, author: String!): BlogPost
+createBlogPost(title: String!, content: String!, author: String!, image_url:String!): BlogPost
     createComment(post_id: String!, author: String!, content: String!): Comment
     loginUser(username: String!, password: String!): AuthData
     updateBlogPost(id: ID!, title: String!, content: String!, author: String!): BlogPost

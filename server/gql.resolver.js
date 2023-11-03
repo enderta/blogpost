@@ -8,7 +8,6 @@ const SECRET = process.env.SECRET;
 
 const { BlogPost, Comment, User } = require("../MonogoDB/schema");
 
-const saltRounds = 10;
 
 const resolvers = {
   
@@ -20,6 +19,10 @@ const resolvers = {
         getBlogPostsByAuthor: async (parent, args) => {
           const blogPosts = await BlogPost.find({ author: args.author });
           return blogPosts;
+        },
+        getBlogPost: async (parent, args) => {
+          const blogPost = await BlogPost.findById(args.id);
+          return blogPost;
         },
         getComments: async () => {
           const comments = await Comment.find();
@@ -41,14 +44,21 @@ const resolvers = {
  
   Mutation: {
     //blogpost
-    createBlogPost: async (parent, args) => {
+    createBlogPost: async (parent, args,context) => {
+     if(!context.user){
+       throw new Error('Unauthorized')
+     }
       const blogPost = new BlogPost({
         title: args.title,
         content: args.content,
         author: args.author,
+        image_url: args.image_url,
       });
+
       await blogPost.save();
       return blogPost;
+
+     
     },
     //comment
     createComment: async (parent, args) => {
@@ -77,47 +87,56 @@ const resolvers = {
         };
     },
     //update blogpost
-    updateBlogPost: async (parent, args) => {
+    updateBlogPost: async (parent, args,context) => {
+      if(!context.user){
+        throw new Error('Unauthorized')
+      }
       const blogPost = await BlogPost.findByIdAndUpdate(
         args.id,
         {
           title: args.title,
           content: args.content,
           author: args.author,
+          image_url: args.image_url,
         },
         { new: true }
       );
       return blogPost;
     },
     //delete blogpost
-    deleteBlogPost: async (parent, args) => {
+    deleteBlogPost: async (parent, args,context) => {
+      if(!context.user){
+        throw new Error('Unauthorized')
+      }
       const blogPost = await BlogPost.findByIdAndRemove(args.id);
       return blogPost;
     },
     //delete comment
-    deleteComment: async (parent, args) => {
-      const comment = await Comment.findByIdAndRemove(args.id);
-      return comment;
+    deleteComment: async (parent, args,context) => {
+    if(!context.user){
+      throw new Error('Unauthorized')
+    }
+    const comment = await Comment.findByIdAndRemove(args.id);
+    return comment;
     },
     //update comment
-    updateComment: async (parent, args) => {
-      const comment = await Comment.findByIdAndUpdate(
-        args.id,
-        {
-          post_id: args.post_id,
-          content: args.content,
-          author: args.author,
-        },
-        { new: true }
-      );
-      return comment;
-    },
-    //delete comment
-    deleteComment: async (parent, args) => {
-      const comment = await Comment.findByIdAndRemove(args.id);
-      return comment;
-    },
+    updateComment: async (parent, args,context) => {
+     if(!context.user){
+       throw new Error('Unauthorized')
+     }
+     const comment = await Comment.findByIdAndUpdate(
+      args.id,
+      {
+        post_id: args.post_id,
+        content: args.content,
+        author: args.author,
+      },
+      { new: true }
+    );
+    return comment;
+  }
   },
+
 };
 
 module.exports = resolvers;
