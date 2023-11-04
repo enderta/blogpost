@@ -1,15 +1,13 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 
-function Edit() {
-    
+function Read() {
     const { id } = useParams();
-
-  return (
-    <div>
-      id: {id}
-    </div>
-  )
+    return (
+        <div>
+            id: {id}
+        </div>
+    )
 }
 
-export default Edit
+export default Read

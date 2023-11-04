@@ -1,45 +1,44 @@
 import React, {useEffect, useState} from 'react'
 import {Button, Card, Form, Image} from "react-bootstrap";
-
+import { gql, useQuery, useMutation } from "@apollo/client";
 function Login() {
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
-    const [darkMode, setDarkMode] = useState(true);
-
-    useEffect(() => {
-        if (darkMode) {
-            document.body.classList.add('bg-dark', 'text-white');
-        } else {
-            document.body.classList.remove('bg-dark', 'text-white');
-        }
-    }, [darkMode]);
-
-    const handleChanges = (e) => {
-        if (e.target.name === 'username') {
-            setUserName(e.target.value);
-        } else if (e.target.name === 'password') {
-            setPassword(e.target.value);
-        }
+   
+const LOGIN = gql`
+mutation Mutation($username: String!, $password: String!) {
+  loginUser(username: $username, password: $password) {
+    token
+    user {
+      id
+      username
+      password
     }
+  }
+}
+`;
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const response = await fetch('https://jobsapi-topaz.vercel.app/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({username, password}),
-        });
-        const data = await response.json();
-        if (data.status === 'success') {
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('user_id', data.user.id);
-            window.location = '/jobs';
-        } else {
-            alert(data.message);
-        }
+const [loginUser, { data }] = useMutation(LOGIN);
+
+const handleSubmit = (e) => {
+    e.preventDefault();
+    loginUser({ variables: { username, password } });
+    console.log(data);
+    if (data) {
+        localStorage.setItem("token", data.loginUser.token);
+        window.location.href = "/home";
     }
+}
+
+const handleChanges = (e) => {
+    if (e.target.name === "username") {
+        setUserName(e.target.value);
+    } else {
+        setPassword(e.target.value);
+    }
+}
+
+
 
     return (
         <div>
@@ -90,14 +89,7 @@ function Login() {
                                     <Button variant={'outline-warning'} data-testid={"login"} type="submit">
                                         Login
                                     </Button>
-                                    <Button
-                                        variant={'outline-warning'}
-                                        onClick={() => {
-                                            window.location = '/register';
-                                        }}
-                                    >
-                                        No account? Register!
-                                    </Button>
+                            
                                 </div>
                             </Form>
                         </Card>

@@ -1,11 +1,11 @@
 import React from 'react'
 
-function LandingPage() {
+function Add() {
   return (
     <div>
-      Landing
+      Add Post
     </div>
   )
 }
 
-export default LandingPage
+export default Add
