@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const NavigationBar = () => {
     const logout = () => {
         localStorage.clear();
-        window.location.href = "/landingpage";
+        window.location.href = "/home";
     };
 
     return (

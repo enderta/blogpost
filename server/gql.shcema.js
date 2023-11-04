@@ -7,8 +7,8 @@ type BlogPost {
     content: String!
     author: String!
     image_url: String!
-    created_at: String!
-    updated_at: String!
+    created_at: String
+    updated_at: String
 }
 
 type Comment {
@@ -16,7 +16,7 @@ type Comment {
     post_id: String!
     author: String!
     content: String!
-    created_at: String!
+    created_at: String
 }
 
 type User {
@@ -41,7 +41,7 @@ type Query {
 }
 
 type Mutation {
-    createBlogPost(title: String!, content: String!, author: String!, image_url: String!): BlogPost
+    createBlogPost(title: String!, content: String!, author: String!, image_url: String!, created_at: String!): BlogPost
     updateBlogPost(id: ID!, title: String!, content: String!, author: String!): BlogPost
     deleteBlogPost(id: ID!): BlogPost
     createComment(post_id: String!, author: String!, content: String!): Comment

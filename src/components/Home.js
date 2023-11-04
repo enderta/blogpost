@@ -51,8 +51,15 @@ export default function Home() {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
+  
+    // Check if it's a valid date
+    if (isNaN(date)) {
+      return "Invalid Date";
+    }
+  
     return date.toLocaleDateString("en-GB");
   };
+  
 
   const highlightSearchTerm = (text, searchTerm) => {
     const parts = text.split(new RegExp(`(${searchTerm})`, "gi"));
