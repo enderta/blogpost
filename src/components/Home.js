@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Navbar from "./Navbar";
 import { gql, useQuery, useMutation } from "@apollo/client";
 import { Link } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button, Card, Row, Container } from "react-bootstrap";
 
 const GET_POSTS = gql`
   query Query {
@@ -27,8 +27,10 @@ const DELETE_POST = gql`
   }
  
 `;
-
-export default function Home() {
+const logout = () => {
+  localStorage.clear();
+  window.location.href = "/home";}
+const Home = () => {
   const [search, setSearch] = useState("");
   const { loading, error, data } = useQuery(GET_POSTS);
   const [deleteBlogPost] = useMutation(DELETE_POST, {
@@ -51,19 +53,19 @@ export default function Home() {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-  
+
     // Check if it's a valid date
     if (isNaN(date)) {
       return "Invalid Date";
     }
-  
+
     return date.toLocaleDateString("en-GB");
   };
-  
 
   const highlightSearchTerm = (text, searchTerm) => {
     const parts = text.split(new RegExp(`(${searchTerm})`, "gi"));
     return (
+      <div className="bg-dark text-white">
       <span>
         {parts.map((part, i) =>
           part.toLowerCase() === searchTerm.toLowerCase() ? (
@@ -75,28 +77,47 @@ export default function Home() {
           )
         )}
       </span>
+      </div>
     );
   };
 
+  
+
   const PostCard = ({ post }) => (
-    <div className="card mb-4" key={post.id}>
-      <img src={post.image_url} className="card-img-top" alt={post.title} />
-      <div className="card-body">
-        <h2 className="card-title">
+    <div className="bg-dark text-white">
+    <Card className="mb-4" key={post.id}
+    bg="dark"
+    text="white"
+    border="success"  
+    style={{ margin: "10px" }}
+   
+    
+    >
+      <Card.Img src={post.image_url} alt={post.title} />
+      <Card.Body>
+        <Card.Title>
           {highlightSearchTerm(post.title, search)}
-        </h2>
-        <p className="card-text">{highlightSearchTerm(post.content, search)}</p>
-        <p className="card-text">{highlightSearchTerm(post.author, search)}</p>
-        <Link to={`/read/${post.id}`} className="btn btn-primary">
-          Read More &raquo;
+        </Card.Title>
+        <Card.Text>{highlightSearchTerm(post.content, search)}</Card.Text>
+        <Card.Text>Created by {highlightSearchTerm(post.author, search)}</Card.Text>
+        <Card.Text>Posted on {highlightSearchTerm(formatDate(post.created_at), search)}</Card.Text>
+        <Link to={`/read/${post.id}`}>
+          <Button variant="outline-primary" style={{margin:"10px"}}>Read More</Button>
         </Link>
+        <br />
         {localStorage.getItem("token") && (
           <>
-            <Link to={`/edit/${post.id}`} className="btn btn-primary">
-              Edit
+            <Link to={`/edit/${post.id}`} style={{ margin: "10px" }}>
+              <Button variant="outline-success">Edit</Button>
             </Link>
+          
+            <Link to={`/add`}>
+              <Button variant="outline-warning">Add</Button>
+            </Link>
+            <Button variant="outline-danger" style={{margin:"10px"}} onClick={logout}>Logout</Button>
             <Button
-              variant="danger"
+            style={{margin:"10px"}}
+              variant="outline-danger"
               onClick={async () => {
                 await deleteBlogPost({
                   variables: { deleteBlogPostId: post.id },
@@ -108,49 +129,50 @@ export default function Home() {
             </Button>
           </>
         )}
-      </div>
-      <div className="card-footer text-muted">
-        Posted on {highlightSearchTerm(formatDate(post.created_at), search)} by{" "}
-        {highlightSearchTerm(post.author, search)}
-      </div>
+      </Card.Body>
+    </Card>
     </div>
   );
 
+
   return (
-    <>
-      <Navbar />
-      <div className="container">
-        <div className="row">
-          <div className="col-md-8">
+    <div className="bg-dark text-white vh-100">
+    <Link to="/login">
+              <Button variant="outline-success" style={{margin:"10px"}}>Admin Login</Button>
+            </Link>
+    <Container>
+      <div className="row">
+        <div className="col-md-8">
+          <Row xs={1} md={3} lg={2} className="g-4">
             {filteredPosts.map((post) => (
-              <PostCard post={post} />
-            ))}
-          </div>
-          <div className="col-md-4">
-            <div className="card mb-4">
-              <div className="card-body">
-                <h5 className="card-title">
-                  <FontAwesomeIcon icon={faSearch} /> Search
-                </h5>
-                <div className="input-group">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Search for..."
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                  />
-                  <span className="input-group-btn">
-                    <button className="btn btn-secondary" type="button">
-                      Go!
-                    </button>
-                  </span>
-                </div>
+              <div key={post.id}>
+                <PostCard post={post} />
               </div>
-            </div>
-          </div>
+            ))}
+          </Row>
+        </div>
+        <div className="col-md-4">
+          <Card bg="dark" text="white" className="mb-4" style={{ margin: "10px" }}>
+            <Card.Body>
+            
+              <div className="input-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search for..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </div>
+            </Card.Body>
+            
+          </Card>
+          
         </div>
       </div>
-    </>
+    </Container>
+    </div>
   );
-}
+};
+
+export default Home;

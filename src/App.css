@@ -1,6 +1,9 @@
 
-body{
-  background: black;
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
 }
 .highlight {
   background-color: rgb(189, 4, 189);

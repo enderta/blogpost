@@ -9,7 +9,7 @@ const NavigationBar = () => {
     };
 
     return (
-        <div style={{margin:"80px"}}>
+        < >
             {localStorage.getItem("token") ? (
                 <Navbar bg="dark" variant="dark" expand="lg" fixed="top">
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -50,7 +50,7 @@ const NavigationBar = () => {
                     </Navbar.Collapse>
                 </Navbar>
             )}
-        </div>
+        </>
     );
 };
 
