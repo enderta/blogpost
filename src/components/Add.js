@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Container } from 'react-bootstrap';
 
 function Add() {
   const [variables, setVariables] = useState({
@@ -53,7 +53,10 @@ function Add() {
 
   return (
     <div>
-      <h1>Add</h1>
+      <h1 style={{ margin: "10px", position: "fixed" }}>Add Post</h1>
+        <Button style={{ margin: "10px", float:"right" }} variant="danger" onClick={() => window.location.href = "/home"}>Back</Button> 
+      <Container className="d-flex justify-content-center align-items-center" style={{margin:"10px"}}>
+   
       <Form onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Label>Title</Form.Label>
@@ -95,10 +98,12 @@ function Add() {
             value={variables.imageUrl}
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <br/>
+        <Button variant="outline-success" type="submit">
           Submit
         </Button>
       </Form>
+      </Container>
     </div>
   );
 }

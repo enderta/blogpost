@@ -104,12 +104,24 @@ const Home = () => {
         <Card.Title>
           {highlightSearchTerm(post.title, search)}
         </Card.Title>
-        <Card.Text>{highlightSearchTerm(post.content, search)}</Card.Text>
-        <Card.Text>Created by {highlightSearchTerm(post.author, search)}</Card.Text>
-        <Card.Text>Posted on {formatDate(post.created_at)}</Card.Text>
-        <Link to={`/read/${post.id}`}>
+        <Card.Text>{
+        post.content.length > 100?
+        (<div>
+          {highlightSearchTerm(post.content.substring(0,100), search)}
+          <Link to={`/read/${post.id}`}>
           <Button variant="outline-primary" style={{margin:"10px"}}>Read More</Button>
         </Link>
+        </div>
+        ):
+        (<div>
+          {highlightSearchTerm(post.content, search)}
+  </div>)
+
+        
+        }</Card.Text>
+        <Card.Text>Created by {highlightSearchTerm(post.author, search)}</Card.Text>
+        <Card.Text>Posted on {formatDate(post.created_at)}</Card.Text>
+        
         <br />
         {localStorage.getItem("token") && (
           <>
@@ -117,9 +129,6 @@ const Home = () => {
             <Link to={`/edit/${post.id}`} style={{ margin: "10px" }}>
               <Button variant="outline-success">Edit</Button>
             </Link>
-          
-            
-          
             <Button
             style={{margin:"10px"}}
               variant="outline-danger"
@@ -171,7 +180,7 @@ const Home = () => {
           </Row>
         </div>
         <div className="col-md-4">
-          <Card  text="white" className="mb-4" style={{ margin: "10px", background:"#200202"}}>
+          <Card  text="white" className="mb-4" style={{ margin: "10px", background:"#200202",position:"fixed"}}>
             <Card.Body>
             
               <div className="input-group">

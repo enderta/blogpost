@@ -3,3 +3,7 @@ body {
     background-color: #200202 !important;
     color: #fff !important;
   }
+
+  .highlight {
+    background-color: rgb(189, 4, 189);
+  }
