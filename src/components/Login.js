@@ -48,12 +48,7 @@ const handleChanges = (e) => {
                             className={'bg-dark text-light'}
                             style={{margin: '10px', padding: '10px', opacity: '0.9'}}
                         >
-                            <h1
-                                className="text-center"
-                                style={{color: 'goldenrod'}}
-                            >
-                                Login
-                            </h1>
+                           
                             <Form onSubmit={handleSubmit}>
                                 <Form.Group controlId="formBasicEmail">
                                     <Form.Label>User Name</Form.Label>

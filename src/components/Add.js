@@ -12,28 +12,16 @@ function Add() {
   });
 
   const ADD_POST = gql`
-    mutation CreateBlogPost(
-      $title: String!
-      $content: String!
-      $author: String!
-      $imageUrl: String!
-      $created_at: Date!
-    ) {
-      createBlogPost(
-        title: $title
-        content: $content
-        author: $author
-        image_url: $imageUrl
-        created_at: $created_at
-      ) {
-        id
-        title
-        content
-        author
-        image_url
-        created_at
-      }
-    }
+   mutation Mutation($title: String!, $content: String!, $author: String!, $imageUrl: String!) {
+  createBlogPost(title: $title, content: $content, author: $author, image_url: $imageUrl) {
+    id
+    title
+    content
+    author
+    image_url
+    created_at
+  }
+}
   `;
 
   const [createBlogPost] = useMutation(ADD_POST, {
@@ -60,6 +48,7 @@ function Add() {
       imageUrl: '',
       created_at: new Date().toISOString(),
     });
+    window.location.href = "/home";
   };
 
   return (

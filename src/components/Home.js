@@ -113,7 +113,7 @@ const Home = () => {
             </Link>
           
             
-            <Button variant="outline-info" style={{margin:"10px"}} onClick={logout}>Logout</Button>
+          
             <Button
             style={{margin:"10px"}}
               variant="outline-danger"
@@ -136,17 +136,23 @@ const Home = () => {
 
   return (
     <div className="bg-dark text-white vh-100">
-    <Link to="/login">
-              <Button variant="outline-secondary" style={{margin:"10px"}}>Admin Login</Button>
-            </Link>
-            {localStorage.getItem("token") && (
+    
+            {!localStorage.getItem("token") ? (
           <div>
-          <Link to={`/add`}>
-          <Button variant="outline-warning" style={{margin:"10px"}}>Add</Button>
+          <Link to="/login">
+              <Button variant="outline-secondary" style={{margin:"10px"}}>Admin Login</Button>
             </Link>
             </div>
 
-            )}
+            ):(
+              <div>
+              <Link to={`/add`}>
+              <Button variant="outline-warning" style={{margin:"10px"}}>Add</Button>
+                </Link>
+                <Button variant="outline-info" style={{margin:"10px"}} onClick={logout}>Logout</Button>
+                </div>
+    
+                )}
     <Container>
       <div className="row">
         <div className="col-md-8">
