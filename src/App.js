@@ -10,7 +10,9 @@ function App() {
     <div  >
     <Pages/>
     </div >
-   
+    <div style={{margin: "40px"}}>
+                <NewsTicker/>
+                </div>
    </>
                
   );

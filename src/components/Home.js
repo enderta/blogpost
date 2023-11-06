@@ -199,9 +199,7 @@ const Home = () => {
         </div>
       </div>
     </Container>
-    <div style={{margin: "40px"}}>
-                <NewsTicker/>
-                </div>
+    
     <div>
     <ScrollToTop/>
     </div>
