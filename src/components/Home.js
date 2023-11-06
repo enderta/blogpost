@@ -52,16 +52,16 @@ const Home = () => {
   );
 
   const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
     const date = new Date(dateString);
-
+    
     // Check if it's a valid date
     if (isNaN(date)) {
       return "Invalid Date";
     }
-
-    return date.toLocaleDateString("en-GB");
+    
+    return date.toLocaleDateString("en-GB", options);
   };
-
   const highlightSearchTerm = (text, searchTerm) => {
     const parts = text.split(new RegExp(`(${searchTerm})`, "gi"));
     return (
@@ -100,21 +100,22 @@ const Home = () => {
         </Card.Title>
         <Card.Text>{highlightSearchTerm(post.content, search)}</Card.Text>
         <Card.Text>Created by {highlightSearchTerm(post.author, search)}</Card.Text>
-        <Card.Text>Posted on {highlightSearchTerm(formatDate(post.created_at), search)}</Card.Text>
+        <Card.Text>Posted on {formatDate(post.created_at)}</Card.Text>
         <Link to={`/read/${post.id}`}>
           <Button variant="outline-primary" style={{margin:"10px"}}>Read More</Button>
         </Link>
         <br />
         {localStorage.getItem("token") && (
           <>
+          <Link to={`/add`}>
+              <Button variant="outline-warning">Add</Button>
+            </Link>
             <Link to={`/edit/${post.id}`} style={{ margin: "10px" }}>
               <Button variant="outline-success">Edit</Button>
             </Link>
           
-            <Link to={`/add`}>
-              <Button variant="outline-warning">Add</Button>
-            </Link>
-            <Button variant="outline-danger" style={{margin:"10px"}} onClick={logout}>Logout</Button>
+            
+            <Button variant="outline-info" style={{margin:"10px"}} onClick={logout}>Logout</Button>
             <Button
             style={{margin:"10px"}}
               variant="outline-danger"
@@ -138,7 +139,7 @@ const Home = () => {
   return (
     <div className="bg-dark text-white vh-100">
     <Link to="/login">
-              <Button variant="outline-success" style={{margin:"10px"}}>Admin Login</Button>
+              <Button variant="outline-secondary" style={{margin:"10px"}}>Admin Login</Button>
             </Link>
     <Container>
       <div className="row">

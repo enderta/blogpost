@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {Button, Card, Form, Image} from "react-bootstrap";
+import {Button, Card, Container, Form, Image} from "react-bootstrap";
 import { gql, useQuery, useMutation } from "@apollo/client";
 function Login() {
     const [username, setUserName] = useState('');
@@ -41,16 +41,9 @@ const handleChanges = (e) => {
 
 
     return (
-        <div>
+        
             <div>
-                <Image
-                    src="https://static1.makeuseofimages.com/wordpress/wp-content/uploads/2016/10/camera-photo-lens-stock-images.jpg"
-                    style={{position: "absolute", opacity: '0.5', height: "100%", width: "100%"}}/>
-            </div>
-            <div className="bg-dark container">
-                <div className="row">
-                    <div className="col-md-6 offset-md-3">
-
+                    <Container className="d-flex justify-content-center align-items-center">
                         <Card
                             className={'bg-dark text-light'}
                             style={{margin: '10px', padding: '10px', opacity: '0.9'}}
@@ -93,9 +86,8 @@ const handleChanges = (e) => {
                                 </div>
                             </Form>
                         </Card>
-                    </div>
-                </div>
-            </div>
+                        </Container>
+                    
         </div>
 
     )
