@@ -107,9 +107,7 @@ const Home = () => {
         <br />
         {localStorage.getItem("token") && (
           <>
-          <Link to={`/add`}>
-              <Button variant="outline-warning">Add</Button>
-            </Link>
+         
             <Link to={`/edit/${post.id}`} style={{ margin: "10px" }}>
               <Button variant="outline-success">Edit</Button>
             </Link>
@@ -141,6 +139,14 @@ const Home = () => {
     <Link to="/login">
               <Button variant="outline-secondary" style={{margin:"10px"}}>Admin Login</Button>
             </Link>
+            {localStorage.getItem("token") && (
+          <div>
+          <Link to={`/add`}>
+          <Button variant="outline-warning" style={{margin:"10px"}}>Add</Button>
+            </Link>
+            </div>
+
+            )}
     <Container>
       <div className="row">
         <div className="col-md-8">
