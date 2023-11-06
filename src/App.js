@@ -6,15 +6,13 @@ import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
-    <div>
+   <>
+    <div  >
     <Pages/>
-    <div style={{margin: "20px"}}>
-                <NewsTicker/>
-            </div>
-            <div>
-              <ScrollToTop/>
-            </div>
-   </div>
+    </div >
+   
+   </>
+               
   );
 }
 

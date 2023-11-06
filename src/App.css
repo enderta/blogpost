@@ -1,10 +1,10 @@
-
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-
+body {
+  background-color: #000; /* Set the background color to dark */
+  color: #fff; /* Set the text color to white */
 }
+
+/* Add any additional CSS styling you need for specific components or elements */
+
 .highlight {
   background-color: rgb(189, 4, 189);
 }

@@ -44,10 +44,7 @@ const handleChanges = (e) => {
         
             <div>
                     <Container className="d-flex justify-content-center align-items-center">
-                        <Card
-                            className={'bg-dark text-light'}
-                            style={{margin: '10px', padding: '10px', opacity: '0.9'}}
-                        >
+                    <Card  text="white" className="mb-4" style={{ margin: "50px", background:"#200202"}}>
                            
                             <Form onSubmit={handleSubmit}>
                                 <Form.Group controlId="formBasicEmail">

@@ -5,6 +5,9 @@ import Navbar from "./Navbar";
 import { gql, useQuery, useMutation } from "@apollo/client";
 import { Link } from "react-router-dom";
 import { Button, Card, Row, Container } from "react-bootstrap";
+import "./Home.css";
+import NewsTicker from './NewsTicker';
+import ScrollToTop from "./ScrollToTop";
 
 const GET_POSTS = gql`
   query Query {
@@ -44,12 +47,15 @@ const Home = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
-  const filteredPosts = data.getBlogPosts.filter(
+  const filteredPosts = [...data.getBlogPosts].sort((a, b) => {
+    return new Date(b.created_at) - new Date(a.created_at);
+  }).filter(
     (post) =>
       post.title.toLowerCase().includes(search.toLowerCase()) ||
       post.content.toLowerCase().includes(search.toLowerCase()) ||
       post.author.toLowerCase().includes(search.toLowerCase())
   );
+  
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -84,15 +90,15 @@ const Home = () => {
   
 
   const PostCard = ({ post }) => (
-    <div className="bg-dark text-white">
-    <Card className="mb-4" key={post.id}
-    bg="dark"
-    text="white"
-    border="success"  
-    style={{ margin: "10px" }}
-   
-    
-    >
+    <div>
+      <Card
+        className="mb-4"
+        key={post.id}
+        bg="dark"
+        text="white"
+        border="dark"
+        style={{ margin: "10px" }}
+      >
       <Card.Img src={post.image_url} alt={post.title} />
       <Card.Body>
         <Card.Title>
@@ -135,7 +141,7 @@ const Home = () => {
 
 
   return (
-    <div className="bg-dark text-white vh-100">
+    <div >
     
             {!localStorage.getItem("token") ? (
           <div>
@@ -153,7 +159,7 @@ const Home = () => {
                 </div>
     
                 )}
-    <Container>
+    <Container >
       <div className="row">
         <div className="col-md-8">
           <Row xs={1} md={3} lg={2} className="g-4">
@@ -165,7 +171,7 @@ const Home = () => {
           </Row>
         </div>
         <div className="col-md-4">
-          <Card bg="dark" text="white" className="mb-4" style={{ margin: "10px" }}>
+          <Card  text="white" className="mb-4" style={{ margin: "10px", background:"#200202"}}>
             <Card.Body>
             
               <div className="input-group">
@@ -184,6 +190,12 @@ const Home = () => {
         </div>
       </div>
     </Container>
+    <div style={{margin: "40px"}}>
+                <NewsTicker/>
+                </div>
+    <div>
+    <ScrollToTop/>
+    </div>
     </div>
   );
 };
