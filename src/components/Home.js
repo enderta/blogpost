@@ -46,7 +46,7 @@ const Home = () => {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
-
+  console.log(data)
   const filteredPosts = [...data.getBlogPosts].sort((a, b) => {
     return new Date(b.created_at) - new Date(a.created_at);
   }).filter(
@@ -55,17 +55,17 @@ const Home = () => {
       post.content.toLowerCase().includes(search.toLowerCase()) ||
       post.author.toLowerCase().includes(search.toLowerCase())
   );
-  
+
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
     const date = new Date(dateString);
-    
+
     // Check if it's a valid date
     if (isNaN(date)) {
       return "Invalid Date";
     }
-    
+
     return date.toLocaleDateString("en-GB", options);
   };
   const highlightSearchTerm = (text, searchTerm) => {
@@ -87,7 +87,7 @@ const Home = () => {
     );
   };
 
-  
+
 
   const PostCard = ({ post }) => (
     <div>
@@ -117,15 +117,15 @@ const Home = () => {
           {highlightSearchTerm(post.content, search)}
   </div>)
 
-        
+
         }</Card.Text>
         <Card.Text>Created by {highlightSearchTerm(post.author, search)}</Card.Text>
         <Card.Text>Posted on {formatDate(post.created_at)}</Card.Text>
-        
+
         <br />
         {localStorage.getItem("token") && (
           <>
-         
+
             <Link to={`/edit/${post.id}`} style={{ margin: "10px" }}>
               <Button variant="outline-success">Edit</Button>
             </Link>
@@ -151,7 +151,7 @@ const Home = () => {
 
   return (
     <div >
-    
+
             {!localStorage.getItem("token") ? (
           <div>
           <Link to="/login">
@@ -166,7 +166,7 @@ const Home = () => {
                 </Link>
                 <Button variant="outline-info" style={{margin:"10px"}} onClick={logout}>Logout</Button>
                 </div>
-    
+
                 )}
     <Container >
       <div className="row">
@@ -182,7 +182,7 @@ const Home = () => {
         <div className="col-md-4">
           <Card  text="white" className="mb-4" style={{ margin: "10px", background:"#200202",position:"fixed"}}>
             <Card.Body>
-            
+
               <div className="input-group">
                 <input
                   type="text"
@@ -193,13 +193,13 @@ const Home = () => {
                 />
               </div>
             </Card.Body>
-            
+
           </Card>
-          
+
         </div>
       </div>
     </Container>
-    
+
     <div>
     <ScrollToTop/>
     </div>
