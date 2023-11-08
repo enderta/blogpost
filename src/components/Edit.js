@@ -124,7 +124,8 @@ function Edit() {
                             onChange={handleInputChange}
                         />
                     </Form.Group>
-                    <Button variant="primary" type="submit">
+                    <br/>
+                    <Button variant="outline-success" type="submit">
                         Submit
                     </Button>
                 </Form>
