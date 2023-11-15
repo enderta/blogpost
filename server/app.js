@@ -4,6 +4,8 @@ const typeDefs = require('./gql.shcema.js');
 const resolvers = require('./gql.resolver.js');
 const db = require('./db.config');
 const jwt = require('jsonwebtoken');
+const serverless = require('serverless-http');
+
 
 const SECRET = process.env.SECRET || 'your-secret-key'; // Replace with your actual secret key
 
@@ -58,3 +60,5 @@ app.listen({ port: process.env.PORT || 4000 }, () =>
         `🚀 Server ready at http://localhost:${process.env.PORT || 4000}${server.graphqlPath}`
     )
 );
+
+module.exports.handler = serverless(app);
