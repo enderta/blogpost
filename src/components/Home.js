@@ -91,15 +91,20 @@ const Home = () => {
 
   const PostCard = ({ post }) => (
     <div>
-      <Card
-        className="mb-4"
-        key={post.id}
-        bg="dark"
-        text="white"
-        border="dark"
-        style={{ margin: "10px" }}
-      >
-      <Card.Img src={post.image_url} alt={post.title} />
+      <Card className="mb-4" key={post.id} bg="dark" text="white" border="dark">
+        <div style={{
+          position: 'relative',
+          paddingBottom: '75%',
+          overflow: 'hidden' // to ensure the image scales down if it's too large
+        }}>
+          <Card.Img src={post.image_url} alt={post.title} style={{
+            position: 'absolute',
+            top: '0',
+            left: '0',
+            height: '100%',
+            width: '100%'
+          }} />
+        </div>
       <Card.Body>
         <Card.Title>
           {highlightSearchTerm(post.title, search)}
@@ -179,7 +184,7 @@ const Home = () => {
             ))}
           </Row>
         </div>
-        <div className="col-md-4">
+        <div className="col-md-4 col-sm-12">
           <Card  text="white" className="mb-4" style={{ margin: "10px", background:"#200202",position:"fixed"}}>
             <Card.Body>
 
