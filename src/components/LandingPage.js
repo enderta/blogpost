@@ -8,7 +8,7 @@ function LandingPage() {
     <div>
       <h1 className="no-scroll" style={{color: 'goldenrod'}}>
         <div>
-         
+
           <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
             <h1 style={{color: 'goldenrod'}}>Hi my name is Ender </h1>
             <h1 style={{color: 'goldenrod'}}>Welcome to my Blog</h1>
@@ -30,6 +30,13 @@ function LandingPage() {
                 <a href='https://master.d1r4igw92m7rsg.amplifyapp.com/' target="_blank" style={{textDecoration: "none"}}>
                   <h3 style={{color:"red"}}>
                     Movies and Shows APP
+                  </h3>
+                </a>
+              </li>
+              <li>
+                <a href='https://github.com/enderta/blogapptesting.git' target='_blank' style={{textDecoration: "none"}}>
+                  <h3 style={{color:"red"}}>
+                    Testing Project for Blog App
                   </h3>
                 </a>
               </li>
