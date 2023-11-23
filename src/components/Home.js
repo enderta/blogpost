@@ -124,7 +124,7 @@ const Home = () => {
 
 
                     }</Card.Text>
-                    <Card.Text>Created by {highlightSearchTerm(post.author, search)}</Card.Text>
+                    <Card.Text>Created by {post.author}</Card.Text>
                     <Card.Text>Posted on {formatDate(post.created_at)}</Card.Text>
 
                     <br/>
