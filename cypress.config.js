@@ -2,6 +2,9 @@ const { defineConfig } = require("cypress");
 const createBundler = require("@bahmutov/cypress-esbuild-preprocessor");
 const preprocessor = require("@badeball/cypress-cucumber-preprocessor");
 const createEsbuildPlugin = require("@badeball/cypress-cucumber-preprocessor/esbuild");
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 module.exports = defineConfig({
   e2e: {
@@ -18,8 +21,8 @@ module.exports = defineConfig({
 
   },
     env: {
-        username: "et1",
-        password: "123456",
+        username: process.env.username,
+        password: process.env.password,
     }
 
 })
