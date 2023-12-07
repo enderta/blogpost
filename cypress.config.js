@@ -17,4 +17,9 @@ module.exports = defineConfig({
     specPattern: "cypress/e2e/*.feature",
 
   },
+    env: {
+        username: "et1",
+        password: "123456",
+    }
+
 })
