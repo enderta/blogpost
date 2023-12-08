@@ -33,10 +33,25 @@ function Add() {
     setVariables({ ...variables, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    createBlogPost({ variables });
-    // Reset form fields after submission if needed
+
+    try {
+      const { data, errors } = await createBlogPost({ variables });
+      // Check if there any errors returned from useMutation(createBlogPost())
+      if (errors) {
+        console.error(errors);
+        // Handle errors here (maybe open an error modal...)
+      } else {
+        // Successful blog post creation
+        console.log('post created', data);
+      }
+    } catch (err) {
+      console.error('Network error', err);
+      // Handle network errors here
+    }
+
+    // Reset form fields after submission
     setVariables({
       title: '',
       content: '',
