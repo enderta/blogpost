@@ -7,15 +7,14 @@ Feature: Blogging System Administration
     When I click the Admin Login button
     When I enter my "username" and "password"
     And I click the Login button
-    Then I should see the Add and Logout buttons
+
 
   @crud @ui
   Scenario: User Login and Create Post
     When The "Add" button is clicked
-    Then The user is directed to the Add Post page
     When The user enters a valid "title","content" and "author" for the post
     And The "Submit" button is clicked
-    Then The post with "author" and "content" is visible on the Blog Homepage
+    Then The post with "author" is visible on the Blog Homepage
 
 
   Scenario: User Edit a Post

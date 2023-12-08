@@ -22,3 +22,5 @@ Then('I should see the posts in', () => {
     // Replace 'postSelector' with the actual CSS selector for your blog posts on the page
     cy.get(':nth-child(1) > :nth-child(1) > a > .btn').should('exist');
 });
+
+//

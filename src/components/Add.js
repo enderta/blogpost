@@ -12,16 +12,12 @@ function Add() {
   });
 
   const ADD_POST = gql`
-   mutation Mutation($title: String!, $content: String!, $author: String!, $imageUrl: String!) {
-  createBlogPost(title: $title, content: $content, author: $author, image_url: $imageUrl) {
-    id
-    title
-    content
-    author
-    image_url
-    created_at
-  }
-}
+    mutation Mutation($title: String!, $content: String!, $author: String!, $imageUrl: String!) {
+      createBlogPost(title: $title, content: $content, author: $author, image_url: $imageUrl) {
+        author
+      }
+    }
+
   `;
 
   const [createBlogPost] = useMutation(ADD_POST, {
@@ -54,9 +50,9 @@ function Add() {
   return (
     <div>
       <h1 style={{ margin: "10px", position: "fixed" }}>Add Post</h1>
-        <Button style={{ margin: "10px", float:"right" }} variant="danger" onClick={() => window.location.href = "/home"}>Back</Button> 
+        <Button style={{ margin: "10px", float:"right" }} variant="danger" onClick={() => window.location.href = "/home"}>Back</Button>
       <Container className="d-flex justify-content-center align-items-center" style={{margin:"10px"}}>
-   
+
       <Form onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Label>Title</Form.Label>

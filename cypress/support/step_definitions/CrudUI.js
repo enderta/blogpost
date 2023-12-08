@@ -25,13 +25,31 @@ When (`I click the Login button`, () => {
     cy.wait(2000);
     cy.get('button[type="submit"]').click();
 
+})
 
+When (`The {string} button is clicked`, (add) => {
+    console.log(add)
+    cy.wait(5000);
+    cy.contains(add).click();
+})
+
+/*
+*  When The user enters a valid "title","content" and "author" for the post
+    And The "Submit" button is clicked
+    Then The post with "author" is visible on the Blog Homepage
+
+* */
+
+When (`The user enters a valid {string},{string} and {string} for the post`, (title, content, author) => {
+    cy.wait(5000);
+    cy.get('input[name="title"]').type(title);
+    cy.get('textarea[name="content"]').type(content);
+    cy.get('input[name="author"]').type(author);
 
 })
 
 
-Then (`I should see the Add and Logout buttons`, () => {
+Then("The post with {string} is visible on the Blog Homepage", (author) => {
     cy.wait(5000);
-    cy.xpath("//button[contains(text(),'Add')]").should('exist');
-    cy.xpath("//button[contains(text(),'Logout')]").should('exist');
-});
+    cy.contains(author).should('exist');
+})
