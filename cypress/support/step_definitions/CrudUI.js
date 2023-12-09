@@ -33,12 +33,6 @@ When (`The {string} button is clicked`, (add) => {
     cy.contains(add).click();
 })
 
-/*
-*  When The user enters a valid "title","content" and "author" for the post
-    And The "Submit" button is clicked
-    Then The post with "author" is visible on the Blog Homepage
-
-* */
 
 When (`The user enters a valid {string},{string} and {string} for the post`, (title, content, author) => {
     cy.wait(5000);
@@ -52,4 +46,17 @@ When (`The user enters a valid {string},{string} and {string} for the post`, (ti
 Then("The post with {string} is visible on the Blog Homepage", (author) => {
     cy.wait(5000);
     cy.contains(author).should('exist');
+})
+
+When (`The user enters new {string} for the post`, (newAuthor) => {
+    cy.wait(5000);
+    cy.get('input[name="author"]').clear();
+    cy.get('input[name="author"]').type(newAuthor);
+
+})
+
+
+Then("The post with {string} is not found on the Blog Homepage", (content) => {
+    cy.wait(5000);
+    cy.contains(content).should('not.exist');
 })

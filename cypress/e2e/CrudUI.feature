@@ -18,15 +18,14 @@ Feature: Blogging System Administration
 
 
   Scenario: User Edit a Post
-    Given A post already exists with a known "content"
     When The "Edit" button is clicked
-    When The user modifies the "content2" and
+    When The user enters new "author2" for the post
     And The "Submit" button is clicked
-    Then The updated "content2" is visible on the Blog Homepage
+    Then The post with "author2" is visible on the Blog Homepage
 
   @crud @ui
   Scenario: User Delete a Post
-    Given A post already exists with a known "content"
+
     When The "Delete" button is clicked
     Then The post with "content" is not found on the Blog Homepage
 
