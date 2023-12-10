@@ -34,13 +34,11 @@ When (`The {string} button is clicked`, (add) => {
 })
 
 
-When (`The user enters a valid {string},{string} and {string} for the post`, (title, content, author) => {
-    cy.wait(5000);
+When('The user enters a valid {string} {string} {string} for the post', (title, content, author) => {
     cy.get('input[name="title"]').type(title);
     cy.get('textarea[name="content"]').type(content);
     cy.get('input[name="author"]').type(author);
-
-})
+});
 
 
 Then("The post with {string} is visible on the Blog Homepage", (author) => {

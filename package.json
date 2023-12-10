@@ -70,7 +70,9 @@
 },
   "cypress-cucumber-preprocessor": {
     "step_definitions": "cypress/e2e/step_definitions/*.js",
-    "nonGlobalStepDefinitions": false
+    "nonGlobalStepDefinitions": false,
+    "filterSpecs": true,
+    "omitFiltered": true
   }
 
 }

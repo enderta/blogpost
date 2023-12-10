@@ -10,13 +10,17 @@ Feature: Blogging System Administration
 
 
   @crud @ui
-  Scenario: User Login and Create Post
+  Scenario Outline: User Login and Create Post
     When The "Add" button is clicked
-    When The user enters a valid "title","content" and "author" for the post
+    When The user enters a valid "<title>" "<content>" "<author>" for the post
     And The "Submit" button is clicked
     Then The post with "author" is visible on the Blog Homepage
 
+    Examples:
+      | title   | content     | author   |
+      | my title| my content  | my author|
 
+  @crud @ui
   Scenario: User Edit a Post
     When The "Edit" button is clicked
     When The user enters new "author2" for the post
