@@ -18,12 +18,6 @@ module.exports = defineConfig({
       return config;
     },
     specPattern: "cypress/e2e/*.feature",
-
-
-  },
-    env: {
-        username: process.env.username,
-        password: process.env.password,
-    }
+  }
 
 })
