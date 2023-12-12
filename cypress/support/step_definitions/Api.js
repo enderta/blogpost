@@ -1,5 +1,9 @@
 import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor'
 require("cypress-xpath");
+const dotenv = require('dotenv');
+
+dotenv.config();
+
 
 Then (`I should see the Admin Login button`, () => {
     cy.wait(5000);
@@ -58,3 +62,4 @@ Then("The post with {string} is not found on the Blog Homepage", (content) => {
     cy.wait(5000);
     cy.contains(content).should('not.exist');
 })
+
