@@ -7,17 +7,24 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 module.exports = defineConfig({
-  e2e: {
-    setupNodeEvents(on, config) {
-      on("file:preprocessor",
-          createBundler({
-            plugins: [createEsbuildPlugin.default(config)],
-          }));
-      preprocessor.addCucumberPreprocessorPlugin(on, config).then(r =>
-          console.log("Cucumber preprocessor loaded"));
-      return config;
+    e2e: {
+        setupNodeEvents(on, config) {
+            on("file:preprocessor",
+                createBundler({
+                    plugins: [createEsbuildPlugin.default(config)],
+                }));
+            preprocessor.addCucumberPreprocessorPlugin(on, config).then(r =>
+                console.log("Cucumber preprocessor loaded"));
+            return config;
+        },
+        specPattern: "cypress/e2e/*.feature",
+
+
     },
-    specPattern: "cypress/e2e/*.feature",
-  }
+    env: {
+        username: process.env.username,
+        password: process.env.password,
+        REACT_APP_GRAPHQL_ENDPOINT: process.env.REACT_APP_GRAPHQL_ENDPOINT,
+    }
 
 })

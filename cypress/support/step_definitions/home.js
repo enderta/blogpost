@@ -1,9 +1,7 @@
 import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor'
 require("cypress-xpath");
 
-beforeEach(()=>{
-    cy.wait(5000);
-})
+
 
 Given('I am on the main page I see the {string} text', (expectedWelcomeText) => {
     cy.visit('https://blogpost-flax.vercel.app/');
