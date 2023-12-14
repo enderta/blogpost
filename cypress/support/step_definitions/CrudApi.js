@@ -3,17 +3,14 @@ import { Given, When } from '@badeball/cypress-cucumber-preprocessor'
 let token;
 let id;
 
-const headers = {
-    'content-type': 'application/json',
-    'Accept': 'application/json',
-}
 
-const performRequest = (method, url, query, variables) => {
+const performRequest = ( query, variables) => {
     return cy.request({
-        method,
+        method: 'POST',
         url: Cypress.env('REACT_APP_GRAPHQL_ENDPOINT'),
         headers: {
-            ...headers,
+            'content-type': 'application/json',
+            'Accept': 'application/json',
             'Authorization': `${token}`,
         },
         body: {
@@ -31,7 +28,7 @@ Given("I am an authenticated user", () => {
             }
         }`;
 
-    performRequest('POST', Cypress.env('REACT_APP_GRAPHQL_ENDPOINT'), query, {
+    performRequest( query, {
         username: Cypress.env('username'),
         password: Cypress.env('password'),
     }).then((res) => {
@@ -48,7 +45,7 @@ When("I perform a POST request to {string} with valid payload", (url) => {
             }
         }`;
 
-    performRequest('POST', url, query, {
+    performRequest( query, {
         title: 'Test Title',
         content: 'Test Content',
         author: 'Test Author',
@@ -67,7 +64,7 @@ When("I perform a POST request to {string} with valid payload for update", (url)
             }
         }`;
 
-    performRequest('POST', url, query, {
+    performRequest( query, {
         updateBlogPostId: id,
         title: 'Test Title',
         content: 'Test Content',
@@ -85,7 +82,7 @@ When("I perform a DELETE request to {string}", (url) => {
             }
         }`;
 
-    performRequest('POST', url, query, {
+    performRequest(query, {
         deleteBlogPostId: id,
     }).then((res) => {
         expect(res.status).to.equal(200);
