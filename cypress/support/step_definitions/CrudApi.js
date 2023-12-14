@@ -1,4 +1,5 @@
 import { Given, When } from '@badeball/cypress-cucumber-preprocessor'
+import chai from 'chai';
 
 let token;
 let id;
@@ -78,28 +79,32 @@ const deleteBlogPost = () => {
     });
 }
 
+const expectStatusToEqual = (res, expectedStatus) => {
+    chai.expect(res.status).to.equal(expectedStatus);
+}
+
 Given("I am an authenticated user", () => {
     loginUser().then((res) => {
         token = res.body.data.loginUser.token;
-        expect(res.status).to.equal(200);
+        expectStatusToEqual(res, 200);
     });
 });
 
 When("I perform a POST request to {string} with valid payload", (url) => {
     createBlogPost().then((res) => {
         id = res.body.data.createBlogPost.id;
-        expect(res.status).to.equal(200);
+        expectStatusToEqual(res, 200);
     });
 });
 
 When("I perform a POST request to {string} with valid payload for update", (url) => {
     updateBlogPost().then((res) => {
-        expect(res.status).to.equal(200);
+        expectStatusToEqual(res, 200);
     });
 });
 
 When("I perform a DELETE request to {string}", (url) => {
     deleteBlogPost().then((res) => {
-        expect(res.status).to.equal(200);
+        expectStatusToEqual(res, 200);
     });
 });
