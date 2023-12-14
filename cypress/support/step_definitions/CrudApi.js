@@ -1,7 +1,6 @@
 import { Given, When } from '@badeball/cypress-cucumber-preprocessor'
 
 let token;
-let response;
 let id;
 
 const headers = {
