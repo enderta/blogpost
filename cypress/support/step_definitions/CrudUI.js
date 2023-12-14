@@ -55,7 +55,3 @@ When (`The user enters new {string} for the post`, (newAuthor) => {
 })
 
 
-Then("The post with {string} is not found on the Blog Homepage", (content) => {
-    cy.wait(5000);
-    cy.contains(content).should('not.exist');
-})

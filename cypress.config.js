@@ -18,6 +18,14 @@ module.exports = defineConfig({
             return config;
         },
         specPattern: "cypress/e2e/*.feature",
+        "reporter": "mochawesome",
+        "reporterOptions": {
+            "reportDir": "cypress/reports/mocha",
+            "quiet": true,
+            "overwrite": false,
+            "html": false,
+            "json": true
+        }
 
 
     },

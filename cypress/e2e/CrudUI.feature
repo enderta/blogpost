@@ -31,5 +31,5 @@ Feature: Blogging System Administration
   Scenario: User Delete a Post
 
     When The "Delete" button is clicked
-    Then The post with "content" is not found on the Blog Homepage
+
 

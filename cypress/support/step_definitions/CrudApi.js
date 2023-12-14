@@ -1,134 +1,94 @@
-import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor'
+import { Given, When } from '@badeball/cypress-cucumber-preprocessor'
 
+let token;
+let response;
+let id;
 
-
-let tkn;
 const headers = {
     'content-type': 'application/json',
     'Accept': 'application/json',
 }
-let response;
-let id;
+
+const performRequest = (method, url, query, variables) => {
+    return cy.request({
+        method,
+        url: Cypress.env('REACT_APP_GRAPHQL_ENDPOINT'),
+        headers: {
+            ...headers,
+            'Authorization': `${token}`,
+        },
+        body: {
+            query,
+            variables,
+        },
+    });
+}
 
 Given("I am an authenticated user", () => {
-    const bdy=
-        `mutation loginUser($username: String!, $password: String!) {
-        loginUser(username: $username, password: $password) {
-          token
-        }
-      }`
+    const query = `
+        mutation loginUser($username: String!, $password: String!) {
+            loginUser(username: $username, password: $password) {
+                token
+            }
+        }`;
 
-
-    response = cy.request({
-        method: 'POST',
-        url: Cypress.env('REACT_APP_GRAPHQL_ENDPOINT'),
-        headers: headers,
-        body: {
-            query: bdy,
-            variables: {
-                username: Cypress.env('username'),
-                password: Cypress.env('password'),
-            },
-        },
-    }).then((response) => {
-        tkn = response.body.data.loginUser.token;
-        console.log(tkn);
+    performRequest('POST', Cypress.env('REACT_APP_GRAPHQL_ENDPOINT'), query, {
+        username: Cypress.env('username'),
+        password: Cypress.env('password'),
+    }).then((res) => {
+        token = res.body.data.loginUser.token;
+        expect(res.status).to.equal(200);
     });
-    response.its('status').should('equal', 200);
 });
 
-
-
 When("I perform a POST request to {string} with valid payload", (url) => {
-    const bdy =
-        `mutation Mutation($title: String!, $content: String!, $author: String!, $imageUrl: String!) {
-  createBlogPost(title: $title, content: $content, author: $author, image_url: $imageUrl) {
-    id
-  }
-}`
+    const query = `
+        mutation Mutation($title: String!, $content: String!, $author: String!, $imageUrl: String!) {
+            createBlogPost(title: $title, content: $content, author: $author, image_url: $imageUrl) {
+                id
+            }
+        }`;
 
-    response = cy.request({
-        method: 'POST',
-        url: Cypress.env('REACT_APP_GRAPHQL_ENDPOINT'),
-        headers: {
-            'content-type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': `${tkn}`,
-        },
-        body: {
-            query: bdy,
-            variables: {
-                title: 'Test Title',
-                content: 'Test Content',
-                author: 'Test Author',
-                imageUrl: 'Test Image URL',
-            },
-        },
-    }).then((response) => {
-        id = response.body.data.createBlogPost.id;
-        console.log(id);
-    })
-    response.its('status').should('equal', 200);
-})
-
-//When I perform a POST request to "/blogposts/1" with valid payload for update
+    performRequest('POST', url, query, {
+        title: 'Test Title',
+        content: 'Test Content',
+        author: 'Test Author',
+        imageUrl: 'Test Image URL',
+    }).then((res) => {
+        id = res.body.data.createBlogPost.id;
+        expect(res.status).to.equal(200);
+    });
+});
 
 When("I perform a POST request to {string} with valid payload for update", (url) => {
-    const bdy =
-        `mutation Mutation($updateBlogPostId: ID!, $title: String!, $content: String!, $author: String!) {
-  updateBlogPost(id: $updateBlogPostId, title: $title, content: $content, author: $author) {
-    author
-    
-  }
-}`
+    const query = `
+        mutation Mutation($updateBlogPostId: ID!, $title: String!, $content: String!, $author: String!) {
+            updateBlogPost(id: $updateBlogPostId, title: $title, content: $content, author: $author) {
+                author
+            }
+        }`;
 
-    response = cy.request({
-        method: 'POST',
-        url: Cypress.env('REACT_APP_GRAPHQL_ENDPOINT'),
-        headers: {
-            'content-type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': `${tkn}`,
-        },
-        body: {
-            query: bdy,
-            variables: {
-                updateBlogPostId: id,
-                title: 'Test Title',
-                content: 'Test Content',
-                author: 'Test Author',
-            },
-        },
-    })
-    response.its('status').should('equal', 200);
+    performRequest('POST', url, query, {
+        updateBlogPostId: id,
+        title: 'Test Title',
+        content: 'Test Content',
+        author: 'Test Author',
+    }).then((res) => {
+        expect(res.status).to.equal(200);
+    });
+});
 
-})
+When("I perform a DELETE request to {string}", (url) => {
+    const query = `
+        mutation DeleteBlogPost($deleteBlogPostId: ID!) {
+            deleteBlogPost(id: $deleteBlogPostId) {
+                author
+            }
+        }`;
 
-// When I perform a DELETE request to "/blogposts/1"
-
-    When("I perform a DELETE request to {string}", (url) => {
-        const bdy =
-            `mutation DeleteBlogPost($deleteBlogPostId: ID!) {
-  deleteBlogPost(id: $deleteBlogPostId) {
-    author
-  }
-}`
-
-        response = cy.request({
-            method: 'POST',
-            url: Cypress.env('REACT_APP_GRAPHQL_ENDPOINT'),
-            headers: {
-                'content-type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': `${tkn}`,
-            },
-            body: {
-                query: bdy,
-                variables: {
-                    deleteBlogPostId: id,
-                },
-            },
-        })
-        response.its('status').should('equal', 200);
-
-    })
+    performRequest('POST', url, query, {
+        deleteBlogPostId: id,
+    }).then((res) => {
+        expect(res.status).to.equal(200);
+    });
+});
