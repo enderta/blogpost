@@ -17,6 +17,7 @@
     "apollo-server-micro": "^3.12.1",
     "bcrypt": "^5.1.1",
     "bootstrap": "^5.3.2",
+    "chai": "^4.3.10",
     "cors": "^2.8.5",
     "cypress": "^13.6.1",
     "cypress-xpath": "^2.0.1",
