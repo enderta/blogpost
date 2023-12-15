@@ -29,10 +29,12 @@ module.exports = defineConfig({
 
 
     },
+    "plugins":["cypress"],
     env: {
         username: process.env.username,
         password: process.env.password,
         REACT_APP_GRAPHQL_ENDPOINT: process.env.REACT_APP_GRAPHQL_ENDPOINT,
+        "cypress/globals": true,
     }
 
 })

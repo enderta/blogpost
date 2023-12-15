@@ -42,6 +42,7 @@ const createBlogPost = () => {
         mutation Mutation($title: String!, $content: String!, $author: String!, $imageUrl: String!) {
             createBlogPost(title: $title, content: $content, author: $author, image_url: $imageUrl) {
                 id
+                author
             }
         }`;
 
@@ -94,20 +95,24 @@ Given("I am an authenticated user", () => {
     });
 });
 
+
 When("I perform a POST request to {string} with valid payload", (url) => {
     createBlogPost().then((res) => {
         id = res.body.data.createBlogPost.id;
-        author = res.body.data.createBlogPost.author;
+        author = res.body.data.createBlogPost.author; // Ensure author is set here
         expectStatusToEqual(res, 200);
     });
+
     performRequest(
         `query Query {
             getBlogPosts {
                 id
+                author
             }
         }`
     ).then((res) => {
         numberofposts = res.body.data.getBlogPosts.length;
+
         console.log(numberofposts)
     });
 });
