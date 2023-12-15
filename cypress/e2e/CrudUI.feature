@@ -8,7 +8,6 @@ Feature: Blogging System Administration
     When I enter my "username" and "password"
     And I click the Login button
 
-
   @crud @ui
   Scenario Outline: User Login and Create Post
     When The "Add" button is clicked
@@ -29,7 +28,6 @@ Feature: Blogging System Administration
 
   @crud @ui
   Scenario: User Delete a Post
-
     When The "Delete" button is clicked
 
 

@@ -5,7 +5,6 @@ Feature: End-to-End tests for Blog Post creation, reading, and deletion
     And I am on the main page I see the "Welcome to my Blog" text
     And I click the "Home" link
 
-
   @e2e @api
   Scenario: Verify successful creation of a blog post through API
     When I perform a POST request to "/blogposts" with valid payload
