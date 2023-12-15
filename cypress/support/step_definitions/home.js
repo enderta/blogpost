@@ -1,10 +1,9 @@
-import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor'
+import {Given, When, Then} from '@badeball/cypress-cucumber-preprocessor'
+
 require("cypress-xpath");
 
-
-
 Given('I am on the main page I see the {string} text', (expectedWelcomeText) => {
-   cy.wait(5000);
+    cy.wait(5000);
     cy.visit('https://blogpost-flax.vercel.app/');
 
 });
@@ -22,4 +21,4 @@ Then('I should see the posts in', () => {
     cy.get(':nth-child(1) > :nth-child(1) > a > .btn').should('exist');
 });
 
-//
+
