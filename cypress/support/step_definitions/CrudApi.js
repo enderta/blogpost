@@ -1,8 +1,11 @@
-import { Given, When } from '@badeball/cypress-cucumber-preprocessor'
+import {Given, When} from '@badeball/cypress-cucumber-preprocessor'
 import chai from 'chai';
 
 let token;
 let id;
+let author;
+let numberofposts;
+let afternumberofposts;
 
 const performRequest = (query, variables) => {
     return cy.request({
@@ -83,6 +86,7 @@ const expectStatusToEqual = (res, expectedStatus) => {
     chai.expect(res.status).to.equal(expectedStatus);
 }
 
+
 Given("I am an authenticated user", () => {
     loginUser().then((res) => {
         token = res.body.data.loginUser.token;
@@ -93,7 +97,18 @@ Given("I am an authenticated user", () => {
 When("I perform a POST request to {string} with valid payload", (url) => {
     createBlogPost().then((res) => {
         id = res.body.data.createBlogPost.id;
+        author = res.body.data.createBlogPost.author;
         expectStatusToEqual(res, 200);
+    });
+    performRequest(
+        `query Query {
+            getBlogPosts {
+                id
+            }
+        }`
+    ).then((res) => {
+        numberofposts = res.body.data.getBlogPosts.length;
+        console.log(numberofposts)
     });
 });
 
@@ -107,4 +122,17 @@ When("I perform a DELETE request to {string}", (url) => {
     deleteBlogPost().then((res) => {
         expectStatusToEqual(res, 200);
     });
+    performRequest(
+        `query Query {
+            getBlogPosts {
+                id
+            }
+        }`
+    ).then((res) => {
+        afternumberofposts = res.body.data.getBlogPosts.length;
+        console.log(afternumberofposts)
+        expect(numberofposts - afternumberofposts).to.equal(1);
+    });
 });
+
+export {token, id, performRequest, author, numberofposts, afternumberofposts}

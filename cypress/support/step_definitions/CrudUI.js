@@ -1,7 +1,7 @@
 import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor'
 require("cypress-xpath");
 
-
+let numberofposts;
 Then (`I should see the Admin Login button`, () => {
     cy.wait(5000);
     cy.xpath("//button[contains(text(),'Admin Login')]").should('exist');
@@ -30,8 +30,14 @@ When (`I click the Login button`, () => {
 
 When (`The {string} button is clicked`, (add) => {
     console.log(add)
+   let els=cy.xpath('//div[@class=\'card-body\']//div[@class=\'card-title h5\']')
+    els.then((el)=>{
+         numberofposts=el.length;
+         console.log(numberofposts)
+    })
     cy.wait(5000);
     cy.contains(add).click();
+
 })
 
 
@@ -54,4 +60,4 @@ When (`The user enters new {string} for the post`, (newAuthor) => {
 
 })
 
-
+export {numberofposts}
