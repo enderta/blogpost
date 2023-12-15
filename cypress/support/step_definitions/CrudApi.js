@@ -95,7 +95,6 @@ Given("I am an authenticated user", () => {
     });
 });
 
-
 When("I perform a POST request to {string} with valid payload", (url) => {
     createBlogPost().then((res) => {
         id = res.body.data.createBlogPost.id;
