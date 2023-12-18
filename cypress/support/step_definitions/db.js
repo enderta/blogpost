@@ -10,6 +10,7 @@ Given('I have a database connection', () => {
         cy.log(res);
     });
 })
+
 /*
 
 describe('db test', () => {
