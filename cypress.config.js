@@ -6,6 +6,7 @@ const dotenv = require('dotenv');
 const { Client } = require('pg');
 const {MongoClient} = require("mongodb");
 
+
 dotenv.config();
 
 module.exports = defineConfig({
@@ -18,7 +19,7 @@ module.exports = defineConfig({
             preprocessor.addCucumberPreprocessorPlugin(on, config).then(r =>
                 console.log("Cucumber preprocessor loaded"));
             on('task', {
-                async connectDB(filter) {
+                async connectDB(url,filter) {
                     /*const client = new Client({
                         user: "postgres",
                         password: "ender",
@@ -31,7 +32,7 @@ module.exports = defineConfig({
                     const res = await client.query(query);
                     await client.end();
                     return res.rows;*/
-                    const url = 'mongodb://127.0.0.1:27017';
+
                     const client = new MongoClient(url);
                     await client.connect();
 
@@ -39,13 +40,13 @@ module.exports = defineConfig({
                     const databases = await client.db().admin().listDatabases();
                     console.log('Databases:', databases);
 
-                    const db = client.db('CYFDevDB');
+                    const db = client.db('BlogPost');
 
                     // Check if the collection exists
                     const collections = await db.listCollections().toArray();
                     console.log('Collections:', collections);
 
-                    const result = await db.collection('cities').find(
+                    const result = await db.collection('blogposts').find(
                         filter
                     ).toArray();
 
@@ -74,6 +75,7 @@ module.exports = defineConfig({
         username: process.env.username,
         password: process.env.password,
         REACT_APP_GRAPHQL_ENDPOINT: process.env.REACT_APP_GRAPHQL_ENDPOINT,
+        MongoURI: process.env.MongoURI,
         "cypress/globals": true,
     }
 });
