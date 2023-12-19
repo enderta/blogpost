@@ -1,9 +1,9 @@
-const { defineConfig } = require("cypress");
+const {defineConfig} = require("cypress");
 const createBundler = require("@bahmutov/cypress-esbuild-preprocessor");
 const preprocessor = require("@badeball/cypress-cucumber-preprocessor");
 const createEsbuildPlugin = require("@badeball/cypress-cucumber-preprocessor/esbuild");
 const dotenv = require('dotenv');
-const { Client } = require('pg');
+const {Client} = require('pg');
 const {MongoClient} = require("mongodb");
 
 
@@ -12,14 +12,12 @@ dotenv.config();
 module.exports = defineConfig({
     e2e: {
         setupNodeEvents(on, config) {
-            on("file:preprocessor",
-                createBundler({
-                    plugins: [createEsbuildPlugin.default(config)],
-                }));
-            preprocessor.addCucumberPreprocessorPlugin(on, config).then(r =>
-                console.log("Cucumber preprocessor loaded"));
+            on("file:preprocessor", createBundler({
+                plugins: [createEsbuildPlugin.default(config)],
+            }));
+            preprocessor.addCucumberPreprocessorPlugin(on, config).then(r => console.log("Cucumber preprocessor loaded"));
             on('task', {
-                async connectDB(url,filter) {
+                async connectDB(url, filter) {
                     /*const client = new Client({
                         user: "postgres",
                         password: "ender",
@@ -46,9 +44,7 @@ module.exports = defineConfig({
                     const collections = await db.listCollections().toArray();
                     console.log('Collections:', collections);
 
-                    const result = await db.collection('blogposts').find(
-                        filter
-                    ).toArray();
+                    const result = await db.collection('blogposts').find(filter).toArray();
 
                     // Log the result
                     console.log('Result:', result);
@@ -59,19 +55,10 @@ module.exports = defineConfig({
                 }
             });
             return config;
-        },
-        specPattern: "cypress/e2e/*.feature",
-        "reporter": "mochawesome",
-        "reporterOptions": {
-            "reportDir": "cypress/reports/mocha",
-            "quiet": true,
-            "overwrite": false,
-            "html": false,
-            "json": true
+        }, specPattern: "cypress/e2e/*.feature", "reporter": "mochawesome", "reporterOptions": {
+            "reportDir": "cypress/reports/mocha", "quiet": true, "overwrite": false, "html": false, "json": true
         }
-    },
-    "plugins":["cypress"],
-    env: {
+    }, "plugins": ["cypress"], env: {
         username: process.env.username,
         password: process.env.password,
         REACT_APP_GRAPHQL_ENDPOINT: process.env.REACT_APP_GRAPHQL_ENDPOINT,
