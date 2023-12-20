@@ -1,6 +1,4 @@
 import {Given, When, Then} from '@badeball/cypress-cucumber-preprocessor'
-import {numberofposts} from "./CrudUI";
-
 require("cypress-xpath");
 
 let numberofpostsUI;
@@ -19,9 +17,9 @@ Then('I click the {string} link', (link) => {
 
     cy.contains(link).click();
 
-    let els=cy.xpath('//div[@class=\'card-body\']//div[@class=\'card-title h5\']')
-    els.then((el)=>{
-        numberofpostsUI=el.length;
+    let els = cy.xpath('//div[@class=\'card-body\']//div[@class=\'card-title h5\']')
+    els.then((el) => {
+        numberofpostsUI = el.length;
         console.log(numberofpostsUI)
     })
 });
@@ -30,6 +28,5 @@ Then('I should see the posts in', () => {
 
     cy.get(':nth-child(1) > :nth-child(1) > a > .btn').should('exist');
 });
-
 
 export {numberofpostsUI};
