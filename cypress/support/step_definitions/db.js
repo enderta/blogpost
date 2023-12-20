@@ -6,7 +6,7 @@ import {numberofpostsUI} from "./home.js"
 require("cypress-xpath");
 
 const url = Cypress.env('MongoURI');
-let numberofPostsDB = 0;
+export let numberofPostsDB = 0;
 
 Given('I have a database connection', () => {
 

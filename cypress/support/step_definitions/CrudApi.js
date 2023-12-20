@@ -4,7 +4,7 @@ import chai from 'chai';
 let token;
 let id;
 let author;
-let numberofposts;
+let numberofpostsAPI;
 let afternumberofposts;
 
 const performRequest = (query, variables) => {
@@ -20,6 +20,19 @@ const performRequest = (query, variables) => {
             query,
             variables,
         },
+    });
+
+    performRequest(
+        `query Query {
+            getBlogPosts {
+                id
+                author
+            }
+        }`
+    ).then((res) => {
+        numberofpostsAPI = res.body.data.getBlogPosts.length;
+
+        console.log(numberofpostsAPI)
     });
 }
 
@@ -110,9 +123,9 @@ When("I perform a POST request to {string} with valid payload", (url) => {
             }
         }`
     ).then((res) => {
-        numberofposts = res.body.data.getBlogPosts.length;
+        numberofpostsAPI = res.body.data.getBlogPosts.length;
 
-        console.log(numberofposts)
+        console.log(numberofpostsAPI)
     });
 });
 
@@ -135,8 +148,8 @@ When("I perform a DELETE request to {string}", (url) => {
     ).then((res) => {
         afternumberofposts = res.body.data.getBlogPosts.length;
         console.log(afternumberofposts)
-        expect(numberofposts - afternumberofposts).to.equal(1);
+        expect(numberofpostsAPI - afternumberofposts).to.equal(1);
     });
 });
 
-export {token, id, performRequest, author, numberofposts, afternumberofposts}
+export {token, id, performRequest, author, numberofpostsAPI, afternumberofposts}

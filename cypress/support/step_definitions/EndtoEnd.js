@@ -1,5 +1,5 @@
 import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor'
-import {numberofposts,afternumberofposts,id, performRequest, author} from './CrudApi.js' ;
+import {numberofpostsAPI,afternumberofposts,id, performRequest, author} from './CrudApi.js' ;
 
 require("cypress-xpath");
 
@@ -17,7 +17,7 @@ Then("I verify the response contains the author", () => {
 });
 
 Then("The number of posts should be one less than before", () => {
-expect(numberofposts-afternumberofposts).to.equal(1);
+expect(numberofpostsAPI-afternumberofposts).to.equal(1);
 });
 
 Then("The post with author is visible on the Blog Homepage", () => {
