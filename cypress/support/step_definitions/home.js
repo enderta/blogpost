@@ -1,9 +1,11 @@
 import {Given, When, Then} from '@badeball/cypress-cucumber-preprocessor'
+
 require("cypress-xpath");
 
 let numberofpostsUI;
 
 Given('I am on the main page I see the {string} text', (expectedWelcomeText) => {
+
     cy.wait(5000);
     cy.visit('https://blogpost-flax.vercel.app/');
 
