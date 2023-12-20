@@ -1,6 +1,9 @@
 import {Given, When, Then} from '@badeball/cypress-cucumber-preprocessor'
+import {numberofposts} from "./CrudUI";
 
 require("cypress-xpath");
+
+let numberofpostsUI;
 
 Given('I am on the main page I see the {string} text', (expectedWelcomeText) => {
     cy.wait(5000);
@@ -13,12 +16,20 @@ When('I see the {string} link', (link) => {
 });
 
 Then('I click the {string} link', (link) => {
+
     cy.contains(link).click();
+
+    let els=cy.xpath('//div[@class=\'card-body\']//div[@class=\'card-title h5\']')
+    els.then((el)=>{
+        numberofpostsUI=el.length;
+        console.log(numberofpostsUI)
+    })
 });
 
 Then('I should see the posts in', () => {
-    // Replace 'postSelector' with the actual CSS selector for your blog posts on the page
+
     cy.get(':nth-child(1) > :nth-child(1) > a > .btn').should('exist');
 });
 
 
+export {numberofpostsUI};
