@@ -8,7 +8,6 @@ require("cypress-xpath");
 const url = Cypress.env('MongoURI');
 let numberofPostsDB = 0;
 
-
 Given('I have a database connection', () => {
 
     cy.task('connectDB', url).then((res) => {
