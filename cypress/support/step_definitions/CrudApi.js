@@ -22,18 +22,7 @@ const performRequest = (query, variables) => {
         },
     });
 
-    performRequest(
-        `query Query {
-            getBlogPosts {
-                id
-                author
-            }
-        }`
-    ).then((res) => {
-        numberofpostsAPI = res.body.data.getBlogPosts.length;
 
-        console.log(numberofpostsAPI)
-    });
 }
 
 const loginUser = () => {
@@ -105,6 +94,18 @@ Given("I am an authenticated user", () => {
     loginUser().then((res) => {
         token = res.body.data.loginUser.token;
         expectStatusToEqual(res, 200);
+    });
+    performRequest(
+        `query Query {
+            getBlogPosts {
+                id
+                author
+            }
+        }`
+    ).then((res) => {
+        numberofpostsAPI = res.body.data.getBlogPosts.length;
+
+        console.log(numberofpostsAPI)
     });
 });
 
